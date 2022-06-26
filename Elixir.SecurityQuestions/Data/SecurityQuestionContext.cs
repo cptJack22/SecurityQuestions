@@ -3,12 +3,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Elixir.SecurityQuestions.Data
 {
 	public class SecurityQuestionContext : DbContext
@@ -27,8 +21,17 @@ namespace Elixir.SecurityQuestions.Data
 		protected override void OnConfiguring(DbContextOptionsBuilder bldr)
 		{
 			base.OnConfiguring(bldr);
-			bldr.UseInMemoryDatabase("SecurityQuestions");
 
+			var dataSource = _config.GetValue<string>("DataSource");
+			if (dataSource == "InMemory")
+			{
+				bldr.UseInMemoryDatabase("SecurityQuestions");
+			}
+			else
+			{
+				var connectionString = _config.GetConnectionString("ESQConnectionString");
+				bldr.UseSqlServer(connectionString);
+			}
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

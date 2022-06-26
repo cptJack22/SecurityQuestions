@@ -32,6 +32,10 @@ namespace Elixir.SecurityQuestions.Data
 				_ctx.Add(new Question() { Query = "What is your favorite album?" });
 				_ctx.Add(new Question() { Query = "What is your favorite movie?" });
 				_ctx.Add(new Question() { Query = "What is your favorite Muppet?" });
+				_ctx.Add(new Question() { Query = "What is your favorite holiday?" });
+				_ctx.Add(new Question() { Query = "What is your quest?" });
+				_ctx.Add(new Question() { Query = "What is your favorite color?" });
+				_ctx.Add(new Question() { Query = "What is the airspeed velocity of the unladen swallow?" });
 			}
 
 			if (!_ctx.Users.Any())

@@ -1,10 +1,6 @@
-﻿
-using Sharprompt;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Hosting;
 using Elixir.SecurityQuestions.Data;
-using System.ComponentModel.DataAnnotations;
 using Elixir.SecurityQuestions.Data.Entities;
 using Elixir.SecurityQuestions.Flows;
 
@@ -37,12 +33,9 @@ namespace Elixir.SecurityQuestions
 			seeder.Seed();
 
 			// Get Service and call method
-			//var repo = serviceProvider.GetService<ISecurityQuestionRepository>();
 			var initialFlow = serviceProvider.GetService<IInitialFlow>();
 			var storeFlow = serviceProvider.GetService<IStoreFlow>();
 			var answerFlow = serviceProvider.GetService<IAnswerFlow>();
-			//var service = serviceProvider.GetService<IMyService>();
-			//service.MyServiceMethod();
 
 
 			//	run application
@@ -73,6 +66,7 @@ namespace Elixir.SecurityQuestions
 				}
 			}
 
+			Console.WriteLine("\nBye");
 			return;
 		}
 	}

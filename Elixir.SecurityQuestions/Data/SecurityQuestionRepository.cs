@@ -3,22 +3,16 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Elixir.SecurityQuestions.Data
 {
-	public class SecurityQuestionInMemoryRepository : ISecurityQuestionRepository
+	public class SecurityQuestionRepository : ISecurityQuestionRepository
 	{
 		private readonly SecurityQuestionContext _ctx;
-		private readonly ILogger<SecurityQuestionInMemoryRepository> _logger;
+		private readonly ILogger<SecurityQuestionRepository> _logger;
 
-		public SecurityQuestionInMemoryRepository(
+		public SecurityQuestionRepository(
 			SecurityQuestionContext ctx,
-			ILogger<SecurityQuestionInMemoryRepository> logger)
+			ILogger<SecurityQuestionRepository> logger)
 		{
 			_ctx = ctx;
 			_logger = logger;
@@ -28,7 +22,8 @@ namespace Elixir.SecurityQuestions.Data
 		#region Questions
 		public IEnumerable<Question> GetAllQuestions()
 		{
-			return _ctx.Questions;
+			return _ctx.Questions
+				.OrderBy(q => q.Id);
 		}
 
 		public Question GetQuestionById(int id)
@@ -82,14 +77,14 @@ namespace Elixir.SecurityQuestions.Data
 
 		public User GetUserByName(string userName)
 		{
-			userName = userName.Trim();
+			userName = userName.Trim().ToLower();
 
 			var user = _ctx.Users
 				.Include(u => u.Responses)
-				.Where(u => u.Name.CompareTo(userName) == 0)
+				.Where(u => u.Name.ToLower() == userName)
 				.SingleOrDefault();
 
-			if(user == null)
+			if (user == null)
 			{
 				user = new User()
 				{

@@ -1,6 +1,7 @@
 ﻿using Elixir.SecurityQuestions.Data;
 using Elixir.SecurityQuestions.Flows;
 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +16,7 @@ namespace Elixir.SecurityQuestions
         public Startup()
         {
             var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
@@ -27,7 +29,10 @@ namespace Elixir.SecurityQuestions
         {
             services.Clear();
 
-            services.AddDbContext<SecurityQuestionContext>();
+            services.AddDbContext<SecurityQuestionContext>(config =>
+			{
+				config.UseSqlServer();
+			});
             
             //	db seeder
             services.AddTransient<SecurityQuestionSeeder>();
@@ -39,7 +44,7 @@ namespace Elixir.SecurityQuestions
             services.AddSingleton<IConfigurationRoot>(Configuration);
 
             //	repositories
-            services.AddScoped<ISecurityQuestionRepository, SecurityQuestionInMemoryRepository>();
+            services.AddScoped<ISecurityQuestionRepository, SecurityQuestionRepository>();
 
             //  flows
             services.AddSingleton<IInitialFlow, InitialFlow>();
@@ -49,7 +54,6 @@ namespace Elixir.SecurityQuestions
 
         private void PromptConfiguration()
         {
-            //Prompt.Symbols.Done = new Symbol("->", "V");
             Prompt.ColorSchema.Answer = ConsoleColor.Green;
             Prompt.ColorSchema.Select = ConsoleColor.DarkCyan;
             Prompt.ThrowExceptionOnCancel = true;

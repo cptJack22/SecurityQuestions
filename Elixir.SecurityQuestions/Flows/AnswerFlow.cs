@@ -35,18 +35,16 @@ namespace Elixir.SecurityQuestions.Flows
 				{
 					var answer = Prompt.Input<string>(resp.Question.Query);
 
-					if(answer == resp.Response)
+					if(!string.IsNullOrEmpty(answer) && answer.ToLower() == resp.Response.ToLower())
 					{
-						Console.WriteLine();
-						Console.WriteLine($"Congratulations, {User.Name}! You correctly answered your security question!");
+						Console.WriteLine($"\nCongratulations, {User.Name}! You correctly answered your security question!");
 						Console.WriteLine("(Press any key)");
 						Console.ReadKey();
 						return FlowControl.Initial;
 					}
 				}
 
-				Console.WriteLine();
-				Console.WriteLine($"Sorry, {User.Name}. You have not answered any security question correctly.");
+				Console.WriteLine($"\nSorry, {User.Name}. You have not answered any security question correctly.");
 				Console.WriteLine("(Press any key)");
 				Console.ReadKey();
 				flow = FlowControl.Initial;
