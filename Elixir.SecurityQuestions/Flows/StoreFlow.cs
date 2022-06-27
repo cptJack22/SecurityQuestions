@@ -41,10 +41,10 @@ namespace Elixir.SecurityQuestions.Flows
 				var qCount = User.Responses.Count();
 				var arrQs = _repo.GetAllQuestions().ToList();
 
-				while (qCount < 3)
+				while (qCount < Constants.REQUIRED_QUESTION_COUNT)
 				{
 					Console.WriteLine();
-					var q = Prompt.Select($"Select a question to answer ({qCount}/3 answered)", arrQs.Select(q => q.Query).ToArray());
+					var q = Prompt.Select($"Select a question to answer ({qCount}/{Constants.REQUIRED_QUESTION_COUNT} answered)", arrQs.Select(q => q.Query).ToArray());
 					var question = _repo.GetQuestionByQuery(q);
 
 					var answer = Prompt.Input<string>(question.Query);
@@ -54,9 +54,16 @@ namespace Elixir.SecurityQuestions.Flows
 					arrQs.Remove(question);
 
 					qCount = User.Responses.Count();
+
+					Console.Clear();
 				}
 
-				_repo.SaveAll();
+				if (_repo.SaveAll())
+				{
+					Console.WriteLine($"\nAll {Constants.REQUIRED_QUESTION_COUNT} questions have been answered. Thank you.");
+					Console.WriteLine("(Press any key)");
+					Console.ReadKey();
+				}
 
 				flow = FlowControl.Initial;
 			}

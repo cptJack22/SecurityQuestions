@@ -48,7 +48,7 @@ namespace Elixir.SecurityQuestions.Flows
 
 				User = _repo.GetUserByName(name);
 
-				Console.WriteLine($"Hello, {User.Name}!");
+				Console.WriteLine($"\n\tHello, {User.Name}!\n");
 
 				//	new user!
 				if (User.Id == Guid.Empty)
@@ -64,12 +64,9 @@ namespace Elixir.SecurityQuestions.Flows
 					}
 				}
 
-				//Console.WriteLine($"You are a new user, {user.Name}. Your Id is {user.Id}");
-
 				if (User.Responses == null || User.Responses.Count == 0)
 				{
 					//	go to store flow
-					//flow = _storeFlow.PerformFlow(); 
 					flow = FlowControl.Store;
 				}
 				else

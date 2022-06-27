@@ -8,6 +8,8 @@ namespace Elixir.SecurityQuestions.Data.Entities
 		[Key]
 		public int Id { get; set; }
 
+		[Required]
+		[MaxLength(500)]
 		public string Query { get; set; }
 		#endregion   //	properties
 	}

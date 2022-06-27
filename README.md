@@ -20,6 +20,11 @@ Main program runs by selecting a UI flow appropriate to the  context of the user
 
 Sharprompt NuGet package by shibayan selected for Console prompt capabilities.
 
+User's name is limited to 255 characters.
+User's answers is limited to 500 characters.
+Questions are limited to 500 characters.
+Required question count stored in a constant for easy updating.
+
 ## UI Flow
 
 The UI Flow is meant to be easily updated if there is ever a need for a UI flow change. A new flow can be coded and called from the other UI Flows after the new flow is added to dependency injection.

@@ -10,16 +10,17 @@ namespace Elixir.SecurityQuestions.Data.Entities
 
 		[Display(Name = "Hi, what is your name?")]
 		[Required]
+		[MaxLength(255)]
 		public string Name { get; set; }
 
-		[MaxLength(3)]
+		[MaxLength(Constants.REQUIRED_QUESTION_COUNT)]
 		public List<UserResponse> Responses { get; set; }
 		#endregion   //	properties
 
 		#region Methods
 		public void AddAnswer(Question question, string answer)
 		{
-			if (Responses != null && Responses.Count < 3)
+			if (Responses != null && Responses.Count < Constants.REQUIRED_QUESTION_COUNT)
 			{
 				var response = new UserResponse()
 				{

@@ -40,6 +40,7 @@ namespace Elixir.SecurityQuestions.Flows
 						Console.WriteLine($"\nCongratulations, {User.Name}! You correctly answered your security question!");
 						Console.WriteLine("(Press any key)");
 						Console.ReadKey();
+
 						return FlowControl.Initial;
 					}
 				}
@@ -47,6 +48,7 @@ namespace Elixir.SecurityQuestions.Flows
 				Console.WriteLine($"\nSorry, {User.Name}. You have not answered any security question correctly.");
 				Console.WriteLine("(Press any key)");
 				Console.ReadKey();
+
 				flow = FlowControl.Initial;
 			}
 			catch (PromptCanceledException ex)
