@@ -12,10 +12,6 @@ namespace Elixir.SecurityQuestions.Data
 		Question GetQuestionByQuery(string query);
 		#endregion //	questions
 
-		#region Responses
-		IEnumerable<UserResponse> GetUserQuestions(User user);
-		#endregion    //	responses
-
 		#region Users
 		void AddUserQnA(User user, Question question, string answer);
 

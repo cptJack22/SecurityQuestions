@@ -8,7 +8,7 @@ Using Visual Studio and c#, build a console app that stores answers to security 
 - SQL Server - data storage
 
 ## Setup Database
-Open a command prompt and set directory to code directory.
+After the code is downloaded. Open a command prompt and set directory to code directory.
 
 In command prompt, run: 
 `dotnet ef database update`
@@ -16,9 +16,15 @@ In command prompt, run:
 ## Notes and choices
 Repository Pattern is used to access and modify data.
 
-Main program runs by selecting a UI flow appropriate to the  context of the user.
+Main program runs by selecting a UI flow appropriate to the  context of the user. Each flow returns the value indicating the next flow to run.
+
+Sharprompt NuGet package by shibayan selected for Console prompt capabilities.
 
 ## UI Flow
+
+The UI Flow is meant to be easily updated if there is ever a need for a UI flow change. A new flow can be coded and called from the other UI Flows after the new flow is added to dependency injection.
+
+There are currently three UI Flows:
 
 ### Initial Flow
 

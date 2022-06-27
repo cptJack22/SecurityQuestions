@@ -39,31 +39,38 @@ namespace Elixir.SecurityQuestions
 
 
 			//	run application
-			FlowControl flow = FlowControl.Initial;
-			User user = null;
-
-			while (flow != FlowControl.Exit)
+			try
 			{
-				switch (flow)
+				FlowControl flow = FlowControl.Initial;
+				User user = null;
+
+				while (flow != FlowControl.Exit)
 				{
-					case FlowControl.Initial:
-						flow = initialFlow.PerformFlow();
-						user = initialFlow.User;
-						break;
+					switch (flow)
+					{
+						case FlowControl.Initial:
+							flow = initialFlow.PerformFlow();
+							user = initialFlow.User;
+							break;
 
-					case FlowControl.Store:
-						storeFlow.User = user;
-						flow = storeFlow.PerformFlow();
-						break;
-					
-					case FlowControl.Answer:
-						answerFlow.User = user;
-						flow = answerFlow.PerformFlow();
-						break;
+						case FlowControl.Store:
+							storeFlow.User = user;
+							flow = storeFlow.PerformFlow();
+							break;
 
-					case FlowControl.Exit:
-						break;
+						case FlowControl.Answer:
+							answerFlow.User = user;
+							flow = answerFlow.PerformFlow();
+							break;
+
+						case FlowControl.Exit:
+							break;
+					}
 				}
+			}
+			catch (Exception ex)
+			{
+				logger.LogError($"An error occurred in Program Main: {ex.Message}");
 			}
 
 			Console.WriteLine("\nBye");

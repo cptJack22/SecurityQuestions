@@ -43,11 +43,6 @@ namespace Elixir.SecurityQuestions.Data
 
 			return question;
 		}
-
-		public IEnumerable<UserResponse> GetUserQuestions(User user)
-		{
-			return user.Responses;
-		}
 		#endregion //	questions
 
 		#region Responses
@@ -62,6 +57,7 @@ namespace Elixir.SecurityQuestions.Data
 		{
 			var user = _ctx.Users
 				.Include(u => u.Responses)
+				.ThenInclude(r => r.Question)
 				.SingleOrDefault(u => u.Id == id);
 
 			if (user == null)
@@ -81,6 +77,7 @@ namespace Elixir.SecurityQuestions.Data
 
 			var user = _ctx.Users
 				.Include(u => u.Responses)
+				.ThenInclude(r => r.Question)
 				.Where(u => u.Name.ToLower() == userName)
 				.SingleOrDefault();
 
