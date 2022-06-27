@@ -21,8 +21,11 @@ Main program runs by selecting a UI flow appropriate to the  context of the user
 Sharprompt NuGet package by shibayan selected for Console prompt capabilities.
 
 User's name is limited to 255 characters.
-User's answers is limited to 500 characters.
+
+User's answers are limited to 500 characters.
+
 Questions are limited to 500 characters.
+
 Required question count stored in a constant for easy updating.
 
 ## UI Flow
