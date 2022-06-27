@@ -19,12 +19,15 @@ namespace Elixir.SecurityQuestions
 			IServiceProvider serviceProvider = services.BuildServiceProvider();
 
 			//	configure console logging
-			serviceProvider
-				.GetService<ILoggerFactory>();
-			//.AddConsole(LogLevel.Debug);
-
-			var logger = serviceProvider.GetService<ILoggerFactory>()
-				.CreateLogger<Program>();
+			using var loggerFactory = LoggerFactory.Create(builder =>
+			{
+				builder
+					.AddFilter("Microsoft", LogLevel.Warning)
+					.AddFilter("System", LogLevel.Warning)
+					.AddFilter("Elixir.SecurityQuestions.Program", LogLevel.Debug)
+					.AddConsole();
+			});
+			ILogger logger = loggerFactory.CreateLogger<Program>();
 
 			logger.LogDebug("Starting application");
 
@@ -64,6 +67,7 @@ namespace Elixir.SecurityQuestions
 							break;
 
 						case FlowControl.Exit:
+							logger.LogDebug("Ending application");
 							break;
 					}
 				}

@@ -4,6 +4,7 @@ using Elixir.SecurityQuestions.Flows;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 using Sharprompt;
 
@@ -37,9 +38,13 @@ namespace Elixir.SecurityQuestions
             //	db seeder
             services.AddTransient<SecurityQuestionSeeder>();
 
-            //  loggin
-            services.AddLogging();
-            
+            //  logging
+            services.AddLogging(loggerBuilder =>
+            {
+                loggerBuilder.ClearProviders();
+                loggerBuilder.AddConsole();
+            });
+
             //  configuration
             services.AddSingleton<IConfigurationRoot>(Configuration);
 

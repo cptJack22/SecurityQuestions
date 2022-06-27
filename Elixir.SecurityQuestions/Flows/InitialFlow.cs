@@ -57,14 +57,16 @@ namespace Elixir.SecurityQuestions.Flows
 					if (_repo.SaveAll())
 					{
 						User = _repo.GetUserByName(User.Name);
+						_logger.LogDebug($"A new user, {User.Name} ({User.Id}) has been created.");
 					}
 					else
 					{
+						_logger.LogError($"Unable to save user {User.Name}");
 						throw new Exception($"Unable to save user {User.Name}");
 					}
 				}
 
-				if (User.Responses == null || User.Responses.Count == 0)
+				if (User.Responses == null || User.Responses.Count < Constants.REQUIRED_QUESTION_COUNT)
 				{
 					//	go to store flow
 					flow = FlowControl.Store;

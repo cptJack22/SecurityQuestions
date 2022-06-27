@@ -31,19 +31,23 @@ namespace Elixir.SecurityQuestions.Flows
 			{
 				var responses = User.Responses;
 
-				foreach(var resp in responses)
+				foreach (var resp in responses)
 				{
 					var answer = Prompt.Input<string>(resp.Question.Query);
 
-					if(!string.IsNullOrEmpty(answer) && answer.ToLower() == resp.Response.ToLower())
+					if (!string.IsNullOrEmpty(answer) && answer.ToLower() == resp.Response.ToLower())
 					{
 						Console.WriteLine($"\nCongratulations, {User.Name}! You correctly answered your security question!");
 						Console.WriteLine("(Press any key)");
 						Console.ReadKey();
 
+						_logger.LogDebug($"{User.Name} answered a security question correctly.");
+
 						return FlowControl.Initial;
 					}
 				}
+
+				_logger.LogDebug($"{User.Name} has not answered any security questions correctly.");
 
 				Console.WriteLine($"\nSorry, {User.Name}. You have not answered any security question correctly.");
 				Console.WriteLine("(Press any key)");
@@ -54,6 +58,8 @@ namespace Elixir.SecurityQuestions.Flows
 			catch (PromptCanceledException ex)
 			{
 				flow = FlowControl.Exit;
+
+				_logger.LogError($"{ex.Message}");
 				Console.WriteLine($"{ex.Message}");
 			}
 

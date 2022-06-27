@@ -73,12 +73,12 @@ namespace Elixir.SecurityQuestions.Data
 
 		public User GetUserByName(string userName)
 		{
-			userName = userName.Trim().ToLower();
+			userName = userName.Trim();
 
 			var user = _ctx.Users
 				.Include(u => u.Responses)
 				.ThenInclude(r => r.Question)
-				.Where(u => u.Name.ToLower() == userName)
+				.Where(u => string.Compare(u.Name, userName) == 0)
 				.SingleOrDefault();
 
 			if (user == null)
