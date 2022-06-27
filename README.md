@@ -6,12 +6,12 @@ Using Visual Studio and c#, build a console app that stores answers to security 
 - EntityFramework
 - [Sharprompt](https://github.com/shibayan/Sharprompt) - Interactive command-line based application framework for C#
 - SQL Server - data storage
+- Optional InMemory mode (for debugging - does not persist data)
 
-## Setup Database
-After the code is downloaded. Open a command prompt and set directory to code directory.
+## Data
+This application utilizes a SQL database with an option to run on InMemory data. InMemory is not persistant, so saves won't save. Running the application should connect and setup to your database on the local sql server. If you need to connect to a different server, you will neeed to update the "ConnectionStrings:ESQConnectionString" setting in the appsettings.config JSON file within the project.
 
-In command prompt, run: 
-`dotnet ef database update`
+If you need to run in InMemory mode, update the "DataSource" setting in the appsettings.config JSON file to "InMemory". Any other value will default to SQL Server mode.
 
 ## Notes and choices
 Repository Pattern is used to access and modify data.
